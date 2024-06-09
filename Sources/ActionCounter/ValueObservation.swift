@@ -1,8 +1,8 @@
 import Foundation
 
 public struct ValueObservation {
-    let timestamp: TimeInterval
-    let value: Double
+    public let timestamp: TimeInterval
+    public let value: Double
 }
 
 

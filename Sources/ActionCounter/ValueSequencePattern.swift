@@ -2,9 +2,13 @@ import Foundation
 
 
 public struct ValueSequencePattern<T: Equatable> {
-    let pattern: [T]
+    public let pattern: [T]
     
-    func matches(in array: [T]) -> [Int] {
+    public init(pattern: [T]) {
+        self.pattern = pattern
+    }
+    
+    public func matches(in array: [T]) -> [Int] {
         guard pattern.count <= array.count else {
             return []
         }
