@@ -59,7 +59,7 @@ final public class ActionCounter {
         }
     }
     
-    init(actionType: ActionType, delegate: ActionCounterDelegate? = nil) throws {
+    public init(actionType: ActionType, delegate: ActionCounterDelegate? = nil) throws {
         guard let descriptor = ActionCounter.registeredDescriptors[actionType] else {
             throw ActionCounterError.unknownActionType
         }
@@ -71,7 +71,7 @@ final public class ActionCounter {
     }
     
     @discardableResult
-    func registerPoseDetection(_ pose: PoseDefinable?) -> PoseDefinable? {
+    public func registerPoseDetection(_ pose: PoseDefinable?) -> PoseDefinable? {
         guard let pose else { return nil }
         
         if let jointLocation = pose.poseLandmarks.filter({ descriptor.jointTypes.contains($0.jointTypeName) }).first?.jointLocation {
@@ -92,7 +92,7 @@ final public class ActionCounter {
         return pose
     }
     
-    func registerActionDetection(ofType targetActionType: ActionCounter.ActionType) {
+    public func registerActionDetection(ofType targetActionType: ActionCounter.ActionType) {
         let isTargetAction = targetActionType == actionType
         let now = Date.timeIntervalSinceReferenceDate
         let tolerance = UnitConstants.Timing.detectionFaultTolerance
@@ -115,23 +115,23 @@ final public class ActionCounter {
         isLastActionValid = isTargetAction
     }
     
-    static func registerActionDescriptor(_ newDescriptor: ActionDescriptor, for actionType: ActionType) {
+    public static func registerActionDescriptor(_ newDescriptor: ActionDescriptor, for actionType: ActionType) {
         registeredDescriptors[actionType] = newDescriptor
     }
     
-    static func registerActionDescriptors(_ descriptors: [ActionType : ActionDescriptor]) {
+    public static func registerActionDescriptors(_ descriptors: [ActionType : ActionDescriptor]) {
         registeredDescriptors.merge(descriptors) { $1 }
     }
     
     @discardableResult
-    static func unregisterActionDescriptor(for actionType: ActionType) -> Bool {
+    public static func unregisterActionDescriptor(for actionType: ActionType) -> Bool {
         let result = registeredDescriptors.keys.contains(actionType)
         registeredDescriptors.removeValue(forKey: actionType)
         
         return result
     }
     
-    func reset() {
+    public func reset() {
         extremaDetector.reset()
         
         extremaSequence.removeAll()
